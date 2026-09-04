@@ -3,10 +3,11 @@ import sqlite3
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
+
 import streamlit as st
 
 st.set_page_config(page_title="National Airfare Index (APIx)", layout="wide")
-st.title("✈️ Real-time Airfare Price Index")
+st.title(" Real-time Airfare Price Index")
 
 
 # 1. Ingest Data from SQLite
@@ -51,11 +52,11 @@ col4.metric("Tracked Flight Volume", f"{int(tracked_flights):,}")
 # 4. Multi-Metric Visualizations via Tabs
 tab1, tab2, tab3, tab4, tab5 = st.tabs(
     [
-        "📈 Lead-Time Curves",
-        "🗺️ Sector Heatmap",
-        "📦 Carrier Pricing",
-        "🎯 Frequency vs. Fare",
-        "📋 Raw Feed",
+        " Lead-Time Curves",
+        " Sector Heatmap",
+        " Carrier Pricing",
+        " Frequency vs. Fare",
+        " Raw Feed",
     ]
 )
 
