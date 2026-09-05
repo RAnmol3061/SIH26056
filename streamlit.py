@@ -47,7 +47,7 @@ filtered_df = df[df["route"] == selected_route]
 main_col, index_col = st.columns([2.3, 1], gap="medium")
 
 with main_col:
-    st.subheader(f"📊 Market Trends: {selected_route}")
+    st.subheader(f"Market Trends: {selected_route}")
 
     # KPI Display
     col1, col2, col3, col4 = st.columns(4)
@@ -64,11 +64,11 @@ with main_col:
     # Multi-Metric Visualizations via Tabs
     tab1, tab2, tab3, tab4, tab5 = st.tabs(
         [
-            "📈 Lead-Time Curves",
-            "🔥 Sector Heatmap",
-            "📦 Carrier Pricing",
-            "scatter 📉 Scatter View",
-            "📋 Raw Feed",
+            "Lead-Time Curves",
+            "Sector Heatmap",
+            "Carrier Pricing",
+            "Scatter View",
+            "Raw Feed",
         ]
     )
 
