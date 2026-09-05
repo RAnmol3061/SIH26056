@@ -1,6 +1,7 @@
 import json
 import random
 import re
+import shutil
 import time
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -8,12 +9,16 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 
 from database import init_db, insert_fares
+from index_calc import compute_index
 from parser import parse_easemytrip
 
 # ---- config: your route basket & advance-purchase windows ----
 ROUTES = [
     ("DEL", "BOM"),
     ("DEL", "BLR"),
+    # ("BOM", "BLR"),
+    # ("DEL", "CCU"),
+    # ("BLR", "HYD"),
     ("MAA", "DEL"),
 ]
 ADVANCE_WINDOWS = [1, 7, 15, 30, 45]  # days ahead
@@ -28,6 +33,9 @@ IGNORE_SUBSTRINGS = [
     "UMS",
     "PSP",
     "google.com",
+    "FareCalendarByDate",
+    "flight-campaign",
+    "FillCalendarDataByMonth",
 ]
 
 
@@ -123,9 +131,9 @@ def main():
     init_db()
 
     # clear out old raw files so each run starts fresh
-    # if RAW_DIR.exists():
-    #    shutil.rmtree(RAW_DIR)
-    # RAW_DIR.mkdir(parents=True, exist_ok=True)
+    if RAW_DIR.exists():
+        shutil.rmtree(RAW_DIR)
+    RAW_DIR.mkdir(parents=True, exist_ok=True)
 
     with sync_playwright() as p:
         for origin, dest in ROUTES:
@@ -136,6 +144,26 @@ def main():
                 scrape_route(p, origin, dest, travel_date)
                 time.sleep(random.uniform(3, 7))
 
+    # --- NEW: Compute the index immediately after scraping ---
+    # Set your permanent base date (the first day you gathered complete data)
+    BASE_DATE = "2026-09-05"
+
+    # Get today's date dynamically for the current scrape
+    CURRENT_DATE = datetime.now().strftime("%Y-%m-%d")
+
+    print(f"\nComputing index for {CURRENT_DATE} against base {BASE_DATE}...")
+    index_result = compute_index(current_date=CURRENT_DATE, base_date=BASE_DATE)
+
+    # Save the output to a JSON file
+    output_file = f"daily_index_{CURRENT_DATE}.json"
+    with open(output_file, "w", encoding="utf-8") as f:
+        json.dump(index_result, f, indent=2, default=str)
+
+    print(f"Index successfully calculated and saved to {output_file}")
+
+
+if __name__ == "__main__":
+    main()
 
 if __name__ == "__main__":
     main()

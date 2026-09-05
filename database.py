@@ -14,7 +14,9 @@ def init_db():
             origin TEXT, dest TEXT,
             carrier_code TEXT, carrier_name TEXT,
             scrape_date TEXT, travel_date TEXT, advance_days INTEGER,
-            total_fare REAL, flight_count INTEGER,
+            fare_class TEXT,
+            base_fare REAL, taxes REAL, total_fare REAL,
+            stops INTEGER,
             source TEXT
         )
     """)
@@ -22,14 +24,18 @@ def init_db():
     conn.close()
 
 def insert_fares(records: list[dict]):
+    if not records:
+        return
     conn = get_conn()
     conn.executemany("""
         INSERT INTO fares (origin, dest, carrier_code, carrier_name,
                             scrape_date, travel_date, advance_days,
-                            total_fare, flight_count, source)
+                            fare_class, base_fare, taxes, total_fare,
+                            stops, source)
         VALUES (:origin,:dest,:carrier_code,:carrier_name,
                 :scrape_date,:travel_date,:advance_days,
-                :total_fare,:flight_count,:source)
+                :fare_class,:base_fare,:taxes,:total_fare,
+                :stops,:source)
     """, records)
     conn.commit()
     conn.close()

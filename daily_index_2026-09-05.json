@@ -1,0 +1,34 @@
+{
+  "base_date": "2026-09-05",
+  "current_date": "2026-09-05",
+  "overall_index": 100.0,
+  "routes": {
+    "DEL-BOM": {
+      "base_fare": 6117.45,
+      "taxes": 1486.09,
+      "total_fare": 7603.54,
+      "route_index": 100.0
+    },
+    "DEL-BLR": {
+      "base_fare": 9782.2,
+      "taxes": 1898.05,
+      "total_fare": 11680.25,
+      "route_index": 100.0
+    },
+    "BOM-BLR": {
+      "error": "missing data for this route/date"
+    },
+    "DEL-CCU": {
+      "error": "missing data for this route/date"
+    },
+    "BLR-HYD": {
+      "error": "missing data for this route/date"
+    },
+    "MAA-DEL": {
+      "base_fare": 10355.99,
+      "taxes": 2252.27,
+      "total_fare": 12608.26,
+      "route_index": 100.0
+    }
+  }
+}
