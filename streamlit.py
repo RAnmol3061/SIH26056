@@ -8,7 +8,7 @@ import streamlit as st
 
 # Page configuration
 st.set_page_config(page_title="National Airfare Index (APIx)", layout="wide")
-st.title("✈️ Real-time Airfare Price Index & Analytics Dashboard")
+st.title("Real-time Airfare Price Index & Analytics Dashboard")
 
 
 # 1. Ingest Data from SQLite
@@ -163,10 +163,8 @@ with main_col:
         )
 
 with index_col:
-    st.subheader("📈 Airfare Index (APIx)")
-    st.markdown(
-        "Laspeyres-style weighted market index tracking price movement[cite: 2]."
-    )
+    st.subheader("Airfare Index (APIx)")
+    st.markdown("Laspeyres-style weighted market index tracking price movement.")
 
     # Dynamic Index Integration Logic
     available_dates = sorted(df["scrape_date"].unique())
